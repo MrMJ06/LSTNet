@@ -1,4 +1,5 @@
 import argparse
+import easydict
 
 class LSTNetInit(object):
     #
