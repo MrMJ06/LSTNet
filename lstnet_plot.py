@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 from pandas.plotting import autocorrelation_plot
 
 # logging
-from __main__ import logger_name
 import logging
-log = logging.getLogger(logger_name)
 
 
 def AutoCorrelationPlot(Data, init):
