@@ -1,9 +1,7 @@
 import numpy as np
 
 # Logging
-from __main__ import logger_name
 import logging
-log = logging.getLogger(logger_name)
 
 class DataUtil(object):
     #
