@@ -125,8 +125,8 @@ class LSTNetInit(object):
             self.batchsize       =     args["batchsize"]
             self.epochs          =     args["epochs"]
             self.initialiser     =     args["initializer"]
-            self.trainpercent    =     args["trainpercent"]
-            self.validpercent    =     args["validpercent"]
+            self.traindate       =     args["traindate"]
+            #self.validpercent    =     args["validpercent"]
             self.highway         =     args["highway"]
             self.train           = not args["no_train"]
             self.validate        = not args["no_validation"]
@@ -162,8 +162,8 @@ class LSTNetInit(object):
             self.batchsize       =     args.batchsize
             self.epochs          =     args.epochs
             self.initialiser     =     args.initializer
-            self.trainpercent    =     args.trainpercent
-            self.validpercent    =     args.validpercent
+            self.traindate       =     args.traindate
+            #self.validpercent    =     args.validpercent
             self.highway         =     args.highway
             self.train           = not args.no_train
             self.validate        = not args.no_validation
@@ -207,8 +207,8 @@ class LSTNetInit(object):
         log.debug("Initialiser: %s", self.initialiser)
         log.debug("Optimiser: %s", self.optimiser)
         log.debug("Loss function to use: %s", self.loss)
-        log.debug("Fraction of data to be used for training: %.2f", self.trainpercent)
-        log.debug("Fraction of data to be used for validation: %.2f", self.validpercent)
+        log.debug("Fraction of data to be used for training: %.2f", self.traindate)
+        #log.debug("Fraction of data to be used for validation: %.2f", self.validpercent)
         log.debug("Train model: %s", self.train)
         log.debug("Validate model: %s", self.validate)
         log.debug("Test model: %s", self.evaltest)
@@ -224,13 +224,53 @@ class LSTNetInit(object):
         log.debug("Create log: %s", self.log)
         log.debug("Debug level: %d", self.debuglevel)
         log.debug("Logfile: %s", self.logfilename)
-
-
+		
+		
 def GetArguments():
+	args = easydict.EasyDict({
+    'data': 'Demanda_2015.xlsx',
+    'window': 24,
+    'horizon': 24,
+    'CNNFilters':100,
+    'CNNKernel':6,
+    'GRUUnits':100,
+    'SkipGRUUnits':5,
+    'skip':24,
+    'dropout':0.2,
+    'normalize':2,
+    'highway':24,
+    'lr':0.001,
+    'batchsize':128,
+    'epochs':10,
+    'initializer':'glorot_uniform',
+    'loss':'mean_absolute_error',
+    'optimizer':'Adam',
+    'traindate':'2015-06-08',
+    #'validtrain':'',
+    'save':None,
+    'load':None,
+    'tensorboard':None,
+    'predict':'all',
+    'series-to-plot':'0',
+    'autocorrelation':None,
+    'save-plot':None,
+    'no-train':True,
+    'no-validation':True,
+    'test':True,
+    'no-saveresults':True,
+    'savehistory':True,
+    'plot':True,
+    'no-log':True,
+    'debuglevel':20,
+    'logfilename':'log/lstnet'
+	})
+	return args
+
+"""def GetArguments():
     # Creating the argument parser
     parser = argparse.ArgumentParser(description='LSTNet Model')
     
-    parser.add_argument('--data', type=str, required=True, help='Location of the data file. Required!!')
+    #parser.add_argument('--data', type=str, required=True, help='Location of the data file. Required!!')
     parser.add_argument('--window', type=int, default=24*7, help='Window size. Default=24*7')
     parser.add_argument('--horizon', type=int, default=12, help='Horizon width. Default=12')
     parser.add_argument('--CNNFilters', type=int, default=100, help='Number of CNN layer filters. Default=100. If set to 0, the CNN layer will be omitted')
@@ -276,5 +316,5 @@ def GetArguments():
 
     args = parser.parse_args()
 
-    return args
+    return args"""
 
