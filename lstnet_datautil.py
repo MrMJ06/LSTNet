@@ -1,7 +1,9 @@
 import numpy as np
+import pandas as pd
 
 # Logging
 import logging
+log = logging.getLogger('LSTNet')
 
 class DataUtil(object):
     #
@@ -20,10 +22,14 @@ class DataUtil(object):
     
     def __init__(self, filename, train, valid, horizon, window, normalise = 2):
         try:
-            fin = open(filename)
 
             log.debug("Start reading data")
-            self.rawdata   = np.loadtxt(fin, delimiter=',')
+            self.rawdata   = pd.read_excel(filename, header=None)
+			demand.columns = ['date', 'time', 'demand']
+			demand['datetime'] = pd.to_datetime(demand['date'].astype(str)+" "+demand['time'].astype(str), format='%Y-%m-%d %H:%M:%S')
+			demand.drop(['date', 'time'], inplace=True, axis=1)
+			demand = demand.set_index('datetime')
+			
             log.debug("End reading data")
 
             self.w         = window

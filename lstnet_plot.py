@@ -5,7 +5,7 @@ from pandas.plotting import autocorrelation_plot
 
 # logging
 import logging
-
+log = logging.getLogger('LSTNet')
 
 def AutoCorrelationPlot(Data, init):
     if Data is not None and init is not None:

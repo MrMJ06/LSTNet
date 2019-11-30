@@ -187,9 +187,8 @@ class LSTNetInit(object):
             self.logfilename     =     args.logfilename
 
     def dump(self):
-        from __main__ import logger_name
         import logging
-        log = logging.getLogger(logger_name)
+        log = logging.getLogger('LSTNet')
 
         log.debug("Data: %s", self.data)
         log.debug("Window: %d", self.window)
