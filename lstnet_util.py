@@ -255,13 +255,13 @@ def GetArguments():
     'series-to-plot':'0',
     'autocorrelation':None,
     'save-plot':None,
-    'no-train':True,
-    'no-validation':True,
+    'no_train':True,
+    'no_validation':True,
     'test':True,
-    'no-saveresults':True,
+    'no_saveresults':True,
     'savehistory':True,
     'plot':True,
-    'no-log':True,
+    'no_log':True,
     'debuglevel':20,
     'logfilename':'log/lstnet'
 	})
