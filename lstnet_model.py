@@ -375,6 +375,8 @@ def rse(y_true, y_pred):
     
     return num / den
 
+def rmse(y_true, y_pred):
+	return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1))
 
 def corr(y_true, y_pred):
     #
@@ -405,7 +407,7 @@ def ModelCompile(model, init):
     	opt  = Adam(lr=init.lr, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 
     # Compile using the previously defined metrics
-    model.compile(optimizer = opt, loss = init.loss, metrics=[rse, corr])
+    model.compile(optimizer = opt, loss = init.loss, metrics=[rse, corr, rmse, 'mae'])
 
     # Launch Tensorboard if selected in arguments
     if init.tensorboard != None:

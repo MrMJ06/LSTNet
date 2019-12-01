@@ -20,16 +20,19 @@ class DataUtil(object):
     #     - X [number of samples, window, number of multivariate time series]
     #     - Y [number of samples, number of multivariate time series]
     
-    def __init__(self, filename, train, valid, horizon, window, normalise = 2):
+    def __init__(self, filename, train, horizon, window, normalise = 2):
         try:
 
             log.debug("Start reading data")
             self.rawdata   = pd.read_excel(filename, header=None)
-			demand.columns = ['date', 'time', 'demand']
-			demand['datetime'] = pd.to_datetime(demand['date'].astype(str)+" "+demand['time'].astype(str), format='%Y-%m-%d %H:%M:%S')
-			demand.drop(['date', 'time'], inplace=True, axis=1)
-			demand = demand.set_index('datetime')
-			
+			      
+            self.rawdata.columns = ['date', 'time', 'demand']
+
+            self.rawdata['datetime'] = pd.to_datetime(self.rawdata['date'].astype(str)+" "+self.rawdata['time'].astype(str), format='%Y-%m-%d %H:%M:%S')
+            self.rawdata.drop(['date', 'time'], inplace=True, axis=1)
+
+            self.rawdata = self.rawdata.set_index('datetime')
+            print(self.rawdata.head())
             log.debug("End reading data")
 
             self.w         = window
@@ -40,7 +43,7 @@ class DataUtil(object):
             self.scale     = np.ones(self.m)
         
             self.normalise_data(normalise)
-            self.split_data(train, valid)
+            self.split_data(train)
         except IOError as err:
             # In case file is not found, all of the above attributes will not have been created
             # Hence, in order to check if this call was successful, you can call hasattr on this object 
@@ -59,15 +62,16 @@ class DataUtil(object):
         
         if normalise == 2: # normalise each timeseries alone. This is the default mode
             for i in range(self.m):
-                self.scale[i] = np.max(np.abs(self.rawdata[:, i]))
-                self.data[:, i] = self.rawdata[:, i] / self.scale[i]
+                self.scale[i] = np.max(np.abs(self.rawdata.iloc[:, i]))
+                self.data[:, i] = self.rawdata.iloc[:, i] / self.scale[i]
     
-    def split_data(self, train, valid):
+    def split_data(self, traindate):
+        train = len(self.rawdata[:traindate]) * 0.8
+        valid = len(self.rawdata[:traindate]) * 0.2
         log.info("Splitting data into training set (%.2f), validation set (%.2f) and testing set (%.2f)", train, valid, 1 - (train + valid))
-
-        train_set = range(self.w + self.h - 1, int(train * self.n))
-        valid_set = range(int(train * self.n), int((train + valid) * self.n))
-        test_set  = range(int((train + valid) * self.n), self.n)
+        train_set = range(self.w + self.h - 1, int(train))
+        valid_set = range(int(train), int((train + valid)))
+        test_set  = range(int((train + valid)), self.n)
         
         self.train = self.get_data(train_set)
         self.valid = self.get_data(valid_set)
