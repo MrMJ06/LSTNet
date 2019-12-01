@@ -376,7 +376,7 @@ def rse(y_true, y_pred):
     return num / den
 
 def rmse(y_true, y_pred):
-	return K.sqrt(K.mean(K.square(y_pred - y_true), axis=-1))
+	return K.sqrt(K.mean(K.square(y_pred - y_true)))
 
 def corr(y_true, y_pred):
     #
