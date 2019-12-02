@@ -229,7 +229,7 @@ class LSTNetInit(object):
 def GetArguments():
 	args = easydict.EasyDict({
     'data': 'Demanda_2015.xlsx',
-    'window': 48,
+    'window': 24*6,
     'horizon': 24,
     'CNNFilters':100,
     'CNNKernel':6,

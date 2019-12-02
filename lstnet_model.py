@@ -100,10 +100,6 @@ class PostSkipTrans(tf.keras.layers.Layer):
         super(PostSkipTrans, self).build(input_shape)
     
     def call(self, inputs):
-        # Get input tensors
-		# - First one is the output of the SkipRNN layer which we will operate on
-		# - The second is the oiriginal model input tensor which we will use to get
-		#   the original batchsize
         x, original_model_input = inputs
 
         # Get the batchsize which is tf.shape(original_model_input)[0]
@@ -224,10 +220,6 @@ class PostARTrans(tf.keras.layers.Layer):
         super(PostARTrans, self).build(input_shape)
     
     def call(self, inputs):
-        # Get input tensors
-		# - First one is the output of the Dense(1) layer which we will operate on
-		# - The second is the oiriginal model input tensor which we will use to get
-		#   the original batchsize
         x, original_model_input = inputs
 
         # Get the batchsize which is tf.shape(original_model_input)[0]
